@@ -16,11 +16,15 @@ func main() {
 	fmt.Println("Tipe Member (0=Non, 1=Silver, 2=Gold): ")
 	fmt.Scan(&tipeMember)
 
+	if jamKeluar < jamMasuk {
+		fmt.Printf("Jam keluar (%d) tidak boleh kurang dari jam masuk (%d).\n", jamKeluar, jamMasuk)
+		return
+	}
+
 	// 1. Hitung Durasi
 	durasi = jamKeluar - jamMasuk
-	if durasi < 0 {
-		durasi = 0 // Validasi sederhana jika jam ngaco
-	}
+	// Catatan: Kode "if durasi < 0" yang lama sudah tidak perlu 
+	// karena sudah dicek oleh validasi di atas.
 
 	// 2. Tentukan Tarif Dasar
 	if durasi <= 2 {
@@ -32,11 +36,10 @@ func main() {
 	}
 
 	// 3. Terapkan Diskon
-	// Menggunakan if-else if untuk cek member
 	if tipeMember == 2 { // Gold
-		diskon = 0.50 * tarifDasar // 50%
+		diskon = 0.50 * tarifDasar
 	} else if tipeMember == 1 { // Silver
-		diskon = 0.20 * tarifDasar // 20%
+		diskon = 0.20 * tarifDasar
 	} else {
 		diskon = 0
 	}
@@ -53,21 +56,20 @@ func main() {
 /*
 ================ KASUS UJI (TEST CASES) ================
 
-Kasus 1:
+Kasus 1 (Normal):
 Input: Masuk=8, Keluar=10, Member=0 (Non)
 Output: Durasi=2, Tarif=5000, Diskon=0, Total=5000
-Cabang IF: if durasi <= 2, else (diskon 0)
 
-Kasus 2:
+Kasus 2 (Diskon Gold):
 Input: Masuk=10, Keluar=14, Member=2 (Gold)
 Output: Durasi=4, Tarif=10000, Diskon=5000, Total=5000
-Cabang IF: else if durasi <= 5, if tipeMember == 2
 
-Kasus 3:
+Kasus 3 (Diskon Silver):
 Input: Masuk=7, Keluar=15, Member=1 (Silver)
 Output: Durasi=8, Tarif=15000, Diskon=3000, Total=12000
-Cabang IF: else (durasi > 5), else if tipeMember == 1
 
-Pertanyaan: Apa yang terjadi jika batas jam diskon silver dinaikkan jadi 30%?
-Jawab: Maka total bayar member silver akan lebih murah, yaitu menjadi Rp 10.500 pada kasus durasi > 5 jam.
+Kasus 4 (Validasi Error - BARU):
+Input: Masuk=10, Keluar=8 (Logika Terbalik)
+Output: [ERROR] Jam keluar (8) tidak boleh kurang dari jam masuk (10).
+Penjelasan: Program langsung berhenti (return) dan tidak mencetak tagihan.
 */

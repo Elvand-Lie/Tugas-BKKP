@@ -10,7 +10,7 @@ func main() {
 	var status string
 
 	// Input data
-	fmt.Println("=== Program Penentu Nilai & Status ===")
+	fmt.Println("=== Program Penentu Nilai & Status (Revisi) ===")
 	fmt.Print("Masukkan Nilai Tugas (0-100): ")
 	fmt.Scan(&tugas)
 	fmt.Print("Masukkan Nilai UTS (0-100): ")
@@ -24,7 +24,6 @@ func main() {
 	nilaiAkhir = (0.3 * tugas) + (0.3 * uts) + (0.4 * uas)
 
 	// 2. Tentukan Grade
-	// Menggunakan if-else if untuk rentang nilai sesuai aturan
 	if nilaiAkhir >= 85 {
 		grade = "A"
 	} else if nilaiAkhir >= 70 {
@@ -37,14 +36,18 @@ func main() {
 		grade = "E"
 	}
 
-	// 3. Tentukan Status Kelulusan
-	// Wajib menggunakan operator logika (&& atau ||) sesuai instruksi
-	// Logika: Lulus jika Grade A/B/C DAN Kehadiran >= 75
+	// 3. Tentukan Status Kelulusan (SOLUSI LOGIKA DIPERBAIKI)
+	// Aturan 1: Lulus Murni (Nilai A-C dan Kehadiran aman)
 	if (grade == "A" || grade == "B" || grade == "C") && kehadiran >= 75 {
 		status = "Lulus"
-	} else if (grade == "C" || grade == "D") && (kehadiran >= 60 && kehadiran < 75) {
-		// Logika: Lulus Bersyarat jika Grade C/D DAN kehadiran antara 60-75
+
+	// Aturan 2: Lulus Bersyarat (REVISI)
+	// Kita tambahkan grade "A" dan "B" disini.
+	// Jadi jika grade A/B/C/D tapi kehadiran hanya 60-74, masuknya Lulus Bersyarat.
+	} else if (grade == "A" || grade == "B" || grade == "C" || grade == "D") && (kehadiran >= 60 && kehadiran < 75) {
 		status = "Lulus Bersyarat"
+
+	// Aturan 3: Sisanya gagal
 	} else {
 		status = "Tidak Lulus"
 	}
@@ -59,27 +62,18 @@ func main() {
 /*
 ================ KASUS UJI (TEST CASES) ================
 
-Kasus 1:
+Kasus 1 (Lulus Murni):
 Input: Tugas=90, UTS=85, UAS=95, Kehadiran=80
 Output: NA=90.5, Grade=A, Status=Lulus
-Cabang IF terpakai:
-- Grade: if nilaiAkhir >= 85 (Grade A)
-- Status: if (grade A/B/C) && kehadiran >= 75 (Lulus)
 
-Kasus 2:
-Input: Tugas=60, UTS=60, UAS=60, Kehadiran=65
-Output: NA=60, Grade=C, Status=Lulus Bersyarat
-Cabang IF terpakai:
-- Grade: else if nilaiAkhir >= 60 (Grade C)
-- Status: else if (grade C/D) && (kehadiran >= 60...) (Lulus Bersyarat)
+Kasus 2 (Kasus yang tadinya Error/Tidak Lulus):
+Input: Tugas=78, UTS=55, UAS=90, Kehadiran=61
+Output: NA=75.9, Grade=B, Status=Lulus Bersyarat
+Penjelasan: 
+- Sebelumnya outputnya "Tidak Lulus" karena Grade B tidak dicek di blok else-if.
+- Sekarang sudah dicek (grade A/B/C/D) && (kehadiran 60-75), jadi statusnya benar.
 
-Kasus 3:
+Kasus 3 (Tidak Lulus):
 Input: Tugas=40, UTS=40, UAS=40, Kehadiran=90
 Output: NA=40, Grade=E, Status=Tidak Lulus
-Cabang IF terpakai:
-- Grade: else (Grade E)
-- Status: else (Tidak Lulus)
-
-Pertanyaan: Apa yang terjadi kalau batas grade A diubah jadi 90?
-Jawab: Maka mahasiswa dengan nilai 85-89 yang sebelumnya dapat A akan turun menjadi B.
 */
