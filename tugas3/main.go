@@ -17,13 +17,13 @@ func main() {
 	fmt.Print("Pilihan (1-3): ")
 	fmt.Scan(&kebutuhan)
 
-	// Logika Percabangan Bersarang (Nested IF)
+	// Logika Percabangan (Nested IF)
 	if kebutuhan == 1 {
 		// Kebutuhan Chat & Sosmed
 		if budget < 50000 {
 			paket = "Paket Sosmed Hemat (2GB)"
 		} else if budget <= 100000 {
-			paket = "Paket Sosmed Standar (10GB + Unli Chat)"
+			paket = "Paket Sosmed Standar (10GB + Unlimited Chat)"
 		} else {
 			paket = "Paket Sosmed Sultan (Unlimited)"
 		}
@@ -42,7 +42,7 @@ func main() {
 		if budget < 50000 || budget == 0 {
 			paket = "Paket Game Mobile (3GB + Ping Stabil)"
 		} else {
-			paket = "Paket Pro Gamer (50GB + Priority)"
+			paket = "Paket Pro (50GB + Priority Latency)"
 		}
 	} else {
 		paket = "Kebutuhan tidak valid"
